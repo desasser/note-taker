@@ -1,5 +1,7 @@
 // Require express
 var express = require("express");
+var path = require("path");
+
 // Initialize app as the server
 var app = express();
 // Initialize PORT
