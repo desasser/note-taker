@@ -12,20 +12,22 @@ module.exports = function(app) {
     // recieve new note to save
     const newNote = req.body;
     // add it to the db.json file
-    const newArr = fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) throw err;
       
-      console.log('this is data', JSON.parse(data));
-      console.log('im a new note', newNote);
+      // console.log('im a new note', newNote);
+      // console.log('this is data', JSON.parse(data));
       const newArr = JSON.parse(data);
       newArr.push(newNote);
-      console.log(newArr);
+      // console.log(newArr);
+      const dataWrite = JSON.stringify(newArr);
+      // console.log('new array', newArr);
+      fs.writeFile('./db/db.json', dataWrite, (err) => {
+        if (err) throw err;
+        console.log('saved succesfully!');
+      });
     });
 
-    fs.writeFile('./db/db.json', data, (err) => {
-      if (err) throw err;
-      console.log('saved succesfully!');
-    });
     // return the new note to the client
     return newNote;
   });
