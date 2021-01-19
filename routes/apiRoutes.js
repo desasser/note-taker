@@ -7,7 +7,6 @@ module.exports = function(app) {
     res.json(noteData);
   });
 
-  //TODO: syntax for read/write file, returning newNote?
   app.post("/api/notes", function(req, res) {
     // recieve new note to save
     const newNote = req.body;
@@ -15,13 +14,13 @@ module.exports = function(app) {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) throw err;
       
-      // console.log('im a new note', newNote);
-      // console.log('this is data', JSON.parse(data));
+      // parse data from file into an array
       const newArr = JSON.parse(data);
+      // add note to array
       newArr.push(newNote);
-      // console.log(newArr);
+      // turn data into a string
       const dataWrite = JSON.stringify(newArr);
-      // console.log('new array', newArr);
+      // write the new string into the file, overwriting the previous version
       fs.writeFile('./db/db.json', dataWrite, (err) => {
         if (err) throw err;
         console.log('saved succesfully!');
