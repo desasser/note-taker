@@ -33,16 +33,19 @@ module.exports = function(app) {
 
   app.delete("/api/notes/:id", function(req, res) {
     let id = req.params.id;
+    
     // read notes
-    const newArr = fs.readFile('./db/db.json', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
       if (err) throw err;
-    });
-    // for each note, check to see if it matches the ID and delete it
-    newArr.forEach((element) => {
-      if (id = element.id) {
-        //delete it
-        delete element;
-      };
+
+      const newArrDel = JSON.parse(data);
+      // for each note, check to see if it matches the ID and delete it
+      newArrDel.forEach((element) => {
+        if (id = element.id) {
+          //delete it
+          delete element;
+        };
+      });
     });
   });
 };
